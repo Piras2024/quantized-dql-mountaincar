@@ -77,9 +77,3 @@ random action selection often picks values that **have little to no physical imp
 Even when a reasonably good policy is found, the **average test reward remains low (≈ 55)**.  
 This is because the policy is **unstable**: some episodes reach the goal with high reward, while others fail entirely.  
 When averaged, these mixed outcomes result in a low overall reward — despite having high potential in some runs.
-
-
-## 📦 Requirements
-
-```bash
-pip install -r requirements.txt
