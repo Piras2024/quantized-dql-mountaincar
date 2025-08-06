@@ -22,6 +22,8 @@ To evaluate the performance of Deep Q-Learning under different levels of action 
 
 ## 📊 Results
 
+![Average Reward Comparison](images/reward_per_episode.png)
+
 As expected, increasing the action space granularity improved performance **up to a certain point**.  
 The graph below (to be added) shows the **average reward of the best policy** found during training, evaluated over **20 test runs** for each quantization level.
 
