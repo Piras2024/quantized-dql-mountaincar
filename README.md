@@ -33,7 +33,7 @@ Several strategies were explored to mitigate this issue:
 - Various **reward shaping techniques**
 
 All experiment runs and configurations are available on my  
-**[Weights & Biases dashboard](([https://wandb.ai/matteo-piras-universit-di-firenze/MountainCar%20DQL/workspace?nw=nwusermatteopiras](https://wandb.ai/matteo-piras-universit-di-firenze/MountainCar%20DQL/workspace?nw=nwusermatteopiras)))**.
+**[Weights & Biases dashboard](([https://wandb.ai/matteo-piras-universit-di-firenze/MountainCar%20DQL/workspace?nw=nwusermatteopiras]))**.
 
 The **best result** was obtained using:
 - **10000 training episodes**
