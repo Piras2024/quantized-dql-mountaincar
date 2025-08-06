@@ -2,23 +2,51 @@
 
 This project implements Deep Q-Learning (DQL) on the `MountainCarContinuous-v0` environment from [Gymnasium](https://gymnasium.farama.org/). Since DQL is inherently suited for discrete action spaces, the continuous action space of the environment is quantized to varying resolutions.
 
-## 📌 Objective
-
-To evaluate the performance of Deep Q-Learning under different levels of action space quantization:
-- 3 discrete actions
-- 11 discrete actions
-- 101 discrete actions
-- 1001 discrete actions
-
 ## 🧠 Method
 
-1. **Environment**: `MountainCarContinuous-v0`
-2. **Algorithm**: Deep Q-Learning
-3. **Action Space Quantization**:
-   - Continuous action range [-1.0, 1.0] is split into `N` evenly spaced actions.
-   - Actions are discretized using `np.linspace(-1.0, 1.0, N)`.
-4. **Neural Network**: Simple feedforward Q-network
-5. **Exploration**: ε-greedy strategy
+1. **Environment**  
+   - `MountainCarContinuous-v0` from [Gymnasium](https://gymnasium.farama.org/)
+   - The agent must learn to accelerate a car up a steep hill using limited engine power.
+
+2. **Algorithm**  
+   - **Deep Q-Learning (DQL)**: Applied to a continuous control problem by discretizing the action space.
+
+3. **Action Space Quantization**  
+   - The environment's continuous action range `[-1.0, 1.0]` is quantized into `N` evenly spaced actions.
+   - Experiments were conducted with the following values for `N`: **3**, **11**, **101**, and **1001**.
+
+4. **Training Setup**  
+   - Each configuration was trained for **10,000 episodes**.
+   - A **replay buffer** and **target network** were used to stabilize learning.
+
+5. **Reward Shaping**  
+   - To encourage faster episode termination, a reward of **-1 per timestep** was added.
+   - For the **1001-action** case, an additional configuration was tested where:
+     - A **positive reward was added every time the car reached a new maximum position on the right**.
+     - This strategy **yielded poor results**, likely due to increased reward variance and ineffective guidance.
+
+6. **Neural Network**  
+   - A simple feedforward Q-network (Multi-Layer Perceptron) with:
+     - Input: state features (position, velocity)
+     - Output: Q-values for each quantized action
+     - Hidden layers: standard MLP with ReLU activations
+     - Optimizer: **Adam**
+
+7. **Exploration Strategy**  
+   - **ε-greedy exploration** was used to balance exploration and exploitation.
+   - The default decay strategy was **hyperbolic**, using the formula:
+     ```python
+     epsilon = c1 / (c2 + i)
+     ```
+     where `i` is the episode number, and constants were set as `c1 = 1000`, `c2 = 1000`.
+   - Other decay strategies were also tested:
+     - **Linear decay** — yielded the best results for the 1001-actions case
+     - **Exponential decay**
+   - ε was typically annealed from `ε_start = 1.0` to `ε_min = 0.01`.
+
+8. **Evaluation**  
+   - After training, the best-performing policy **(found during training)** was evaluated over **20 test runs** to compute average reward.
+
 
 ## 📊 Results
 
