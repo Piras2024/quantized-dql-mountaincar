@@ -20,19 +20,32 @@ To evaluate the performance of Deep Q-Learning under different levels of action 
 4. **Neural Network**: Simple feedforward Q-network
 5. **Exploration**: ε-greedy strategy
 
-## 📊 Goals
+## 📊 Results
 
-- Understand how quantization granularity affects:
-  - Convergence speed
-  - Maximum reward
-  - Training stability
-- Determine if there's a tradeoff between performance and action resolution
+As expected, increasing the action space granularity improved performance **up to a certain point**.  
+The graph below (to be added) shows the **average reward of the best policy** found during training, evaluated over **20 test runs** for each quantization level.
 
-## 🏁 Results
+However, when the number of discrete actions becomes too high — such as **1001 actions** — training a successful agent using DQL becomes significantly harder.
 
-Key observations (to be expanded after experiments):
-- Coarse quantization (e.g., 3 actions) may lead to faster convergence but poor policy performance
-- Finer quantization (e.g., 1001 actions) increases precision but slows training
+Several strategies were explored to mitigate this issue:
+- Different **ε-decay strategies**: linear, exponential, and hyperbolic
+- **Learning rate schedules**
+- Various **reward shaping techniques**
+
+All experiment runs and configurations are available on my  
+**[Weights & Biases dashboard](([https://wandb.ai/matteo-piras-universit-di-firenze/MountainCar%20DQL/workspace?nw=nwusermatteopiras](https://wandb.ai/matteo-piras-universit-di-firenze/MountainCar%20DQL/workspace?nw=nwusermatteopiras)))**.
+
+The **best result** was obtained using:
+- **10000 training episodes**
+- **Linearly decaying ε**, which promotes more exploration
+
+The core issue with very fine-grained (e.g., 1001) quantization appears to be **action dilution**:  
+random action selection often picks values that **have little to no physical impact**, making it difficult for the agent to explore effectively and reach the reward zone.
+
+Even when a reasonably good policy is found, the **average test reward remains low (≈ 55)**.  
+This is because the policy is **unstable**: some episodes reach the goal with high reward, while others fail entirely.  
+When averaged, these mixed outcomes result in a low overall reward — despite having high potential in some runs.
+
 
 ## 📦 Requirements
 
