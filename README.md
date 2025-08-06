@@ -22,10 +22,12 @@ To evaluate the performance of Deep Q-Learning under different levels of action 
 
 ## 📊 Results
 
-![Average Reward Comparison](images/reward_per_episode.png)
+![Training rewards](images/reward_per_episode.png)
 
 As expected, increasing the action space granularity improved performance **up to a certain point**.  
 The graph below (to be added) shows the **average reward of the best policy** found during training, evaluated over **20 test runs** for each quantization level.
+
+![Average Test Reward Comparison](images/average_test_reward.png)
 
 However, when the number of discrete actions becomes too high — such as **1001 actions** — training a successful agent using DQL becomes significantly harder.
 
